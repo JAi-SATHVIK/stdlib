@@ -5,7 +5,6 @@ submodule (stdlib_stats) stdlib_stats_pca
   use stdlib_linalg_constants, only: ilp
   use stdlib_linalg_blas, only: gemm, syrk
   use stdlib_linalg_state, only: linalg_state_type, LINALG_ERROR, LINALG_VALUE_ERROR
-  use stdlib_sorting, only: sort_index
   implicit none
 
 contains
@@ -104,7 +103,6 @@ contains
       type(linalg_state_type), intent(out) :: err
 
       integer(ilp) :: i, j, m
-      integer(ilp), allocatable :: idx(:)
       real(sp) :: alpha, beta
       real(sp), allocatable :: lambda(:)
       real(sp), allocatable :: c(:,:), vectors(:,:)
@@ -120,26 +118,21 @@ contains
       call syrk('U', 'T', p, n, alpha, x_centered, n, beta, c, p)
 
       ! Fill lower triangle from upper triangle (syrk only fills upper)
-      do j = 1, p-1
-         do i = j+1, p
-            c(i, j) = c(j, i)
-         end do
-      end do
-
       allocate(lambda(p))
       allocate(vectors(p, p))
-      call eigh(c, lambda, vectors=vectors, err=err)
+      call eigh(c, lambda, vectors=vectors, upper_a=.true., err=err)
 
       if (err%ok()) then
-         ! Sort eigenvalues in descending order
-         allocate(idx(p))
-         call sort_index(lambda, idx, reverse=.true.)
+         ! LAPACK returns eigenvalues in ascending order.
+         ! Flip them to get descending order for PCA.
+         lambda = lambda(p:1:-1)
+         vectors = vectors(:, p:1:-1)
 
-         ! Assign sorted results with safety bounds checks
+         ! Assign results with safety bounds checks
          m = min(size(components, 1, kind=ilp), p)
          m = min(m, size(singular_values, 1, kind=ilp))
          do i = 1, m
-            components(i, :) = vectors(:, idx(i))
+            components(i, :) = vectors(:, i)
             if (lambda(i) > 0.0_sp) then
                singular_values(i) = sqrt(lambda(i) * real(n-1, sp))
             else
@@ -157,7 +150,6 @@ contains
       type(linalg_state_type), intent(out) :: err
 
       integer(ilp) :: i, j, m
-      integer(ilp), allocatable :: idx(:)
       real(dp) :: alpha, beta
       real(dp), allocatable :: lambda(:)
       real(dp), allocatable :: c(:,:), vectors(:,:)
@@ -173,26 +165,21 @@ contains
       call syrk('U', 'T', p, n, alpha, x_centered, n, beta, c, p)
 
       ! Fill lower triangle from upper triangle (syrk only fills upper)
-      do j = 1, p-1
-         do i = j+1, p
-            c(i, j) = c(j, i)
-         end do
-      end do
-
       allocate(lambda(p))
       allocate(vectors(p, p))
-      call eigh(c, lambda, vectors=vectors, err=err)
+      call eigh(c, lambda, vectors=vectors, upper_a=.true., err=err)
 
       if (err%ok()) then
-         ! Sort eigenvalues in descending order
-         allocate(idx(p))
-         call sort_index(lambda, idx, reverse=.true.)
+         ! LAPACK returns eigenvalues in ascending order.
+         ! Flip them to get descending order for PCA.
+         lambda = lambda(p:1:-1)
+         vectors = vectors(:, p:1:-1)
 
-         ! Assign sorted results with safety bounds checks
+         ! Assign results with safety bounds checks
          m = min(size(components, 1, kind=ilp), p)
          m = min(m, size(singular_values, 1, kind=ilp))
          do i = 1, m
-            components(i, :) = vectors(:, idx(i))
+            components(i, :) = vectors(:, i)
             if (lambda(i) > 0.0_dp) then
                singular_values(i) = sqrt(lambda(i) * real(n-1, dp))
             else
