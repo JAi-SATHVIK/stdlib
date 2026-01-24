@@ -16,10 +16,8 @@ contains
       integer(ilp) :: i, j, m, n
       m = size(x, 1, kind=ilp)
       n = size(x, 2, kind=ilp)
-      do j = 1, n
-         do i = 1, m
-            x(i, j) = x(i, j) - mu(j)
-         end do
+      do concurrent(i=1:m, j=1:n)
+         x(i, j) = x(i, j) - mu(j)
       end do
     end subroutine center_data_sp
     subroutine center_data_dp(x, mu)
@@ -28,10 +26,8 @@ contains
       integer(ilp) :: i, j, m, n
       m = size(x, 1, kind=ilp)
       n = size(x, 2, kind=ilp)
-      do j = 1, n
-         do i = 1, m
-            x(i, j) = x(i, j) - mu(j)
-         end do
+      do concurrent(i=1:m, j=1:n)
+         x(i, j) = x(i, j) - mu(j)
       end do
     end subroutine center_data_dp
 
@@ -368,10 +364,8 @@ contains
       call gemm('N', 'N', n, p, nc, one, x_reduced, n, components, nc, zero, x_reconstructed, n)
       
       if (present(x_mean)) then
-         do j = 1, p
-            do i = 1, n
-               x_reconstructed(i, j) = x_reconstructed(i, j) + x_mean(j)
-            end do
+         do concurrent(i=1:n, j=1:p)
+            x_reconstructed(i, j) = x_reconstructed(i, j) + x_mean(j)
          end do
       end if
     end subroutine pca_inverse_transform_sp
@@ -392,10 +386,8 @@ contains
       call gemm('N', 'N', n, p, nc, one, x_reduced, n, components, nc, zero, x_reconstructed, n)
       
       if (present(x_mean)) then
-         do j = 1, p
-            do i = 1, n
-               x_reconstructed(i, j) = x_reconstructed(i, j) + x_mean(j)
-            end do
+         do concurrent(i=1:n, j=1:p)
+            x_reconstructed(i, j) = x_reconstructed(i, j) + x_mean(j)
          end do
       end if
     end subroutine pca_inverse_transform_dp
