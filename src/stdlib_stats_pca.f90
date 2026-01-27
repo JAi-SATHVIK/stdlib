@@ -48,8 +48,7 @@ contains
       singular_values = zero
 
       n_s = min(n, p)
-      allocate(s_tmp(n_s))
-      allocate(vt_tmp(n_s, p))
+      allocate(s_tmp(n_s), vt_tmp(n_s, p))
 
       call svd(x_centered, s_tmp, vt=vt_tmp, overwrite_a=.true., full_matrices=.false., err=err)
 
@@ -76,8 +75,7 @@ contains
       singular_values = zero
 
       n_s = min(n, p)
-      allocate(s_tmp(n_s))
-      allocate(vt_tmp(n_s, p))
+      allocate(s_tmp(n_s), vt_tmp(n_s, p))
 
       call svd(x_centered, s_tmp, vt=vt_tmp, overwrite_a=.true., full_matrices=.false., err=err)
 
@@ -98,7 +96,7 @@ contains
       real(sp), intent(out) :: singular_values(:)
       type(linalg_state_type), intent(out) :: err
 
-      integer(ilp) :: i, j, m
+      integer(ilp) :: m
       real(sp) :: alpha, beta
       real(sp), allocatable :: lambda(:)
       real(sp), allocatable :: c(:,:), vectors(:,:)
@@ -113,9 +111,7 @@ contains
       allocate(c(p, p), source=zero)
       call syrk('U', 'T', p, n, alpha, x_centered, n, beta, c, p)
 
-      ! Fill lower triangle from upper triangle (syrk only fills upper)
-      allocate(lambda(p))
-      allocate(vectors(p, p))
+      allocate(lambda(p), vectors(p, p))
       call eigh(c, lambda, vectors=vectors, upper_a=.true., err=err)
 
       if (err%ok()) then
@@ -134,8 +130,6 @@ contains
          ! Convert eigenvalues to singular values: s = sqrt(lambda * (n-1))
          where (lambda(1:m) > 0.0_sp)
             singular_values(1:m) = sqrt(lambda(1:m) * real(n-1, sp))
-         elsewhere
-            singular_values(1:m) = 0.0_sp
          end where
       end if
     end subroutine pca_eigh_driver_sp
@@ -147,7 +141,7 @@ contains
       real(dp), intent(out) :: singular_values(:)
       type(linalg_state_type), intent(out) :: err
 
-      integer(ilp) :: i, j, m
+      integer(ilp) :: m
       real(dp) :: alpha, beta
       real(dp), allocatable :: lambda(:)
       real(dp), allocatable :: c(:,:), vectors(:,:)
@@ -162,9 +156,7 @@ contains
       allocate(c(p, p), source=zero)
       call syrk('U', 'T', p, n, alpha, x_centered, n, beta, c, p)
 
-      ! Fill lower triangle from upper triangle (syrk only fills upper)
-      allocate(lambda(p))
-      allocate(vectors(p, p))
+      allocate(lambda(p), vectors(p, p))
       call eigh(c, lambda, vectors=vectors, upper_a=.true., err=err)
 
       if (err%ok()) then
@@ -183,8 +175,6 @@ contains
          ! Convert eigenvalues to singular values: s = sqrt(lambda * (n-1))
          where (lambda(1:m) > 0.0_dp)
             singular_values(1:m) = sqrt(lambda(1:m) * real(n-1, dp))
-         elsewhere
-            singular_values(1:m) = 0.0_dp
          end where
       end if
     end subroutine pca_eigh_driver_dp
@@ -200,16 +190,30 @@ contains
       type(linalg_state_type), intent(out), optional :: err
 
       type(linalg_state_type) :: err0
-      integer(ilp) :: n, p
+      integer(ilp) :: n, p, i
       real(sp), allocatable :: mu(:), x_centered(:,:)
       character(len=:), allocatable :: method_
 
       n = size(x, 1, kind=ilp)
       p = size(x, 2, kind=ilp)
+
+      ! Input validation: check for empty arrays
+      if (n < 1 .or. p < 1) then
+         err0 = linalg_state_type("pca", LINALG_VALUE_ERROR, &
+                "Input array must have at least 1 observation and 1 feature")
+         call err0%handle(err)
+         return
+      end if
+
+      ! Convert method to lowercase for case-insensitive comparison
       method_ = trim(adjustl(optval(method, "svd")))
+      do i = 1, len(method_)
+         if (method_(i:i) >= 'A' .and. method_(i:i) <= 'Z') then
+            method_(i:i) = achar(iachar(method_(i:i)) + 32)
+         end if
+      end do
 
       ! Calculate mean along dimension 1 (column means) using stdlib mean
-      allocate(mu(p))
       mu = mean(x, 1)
 
       ! Validate and assign x_mean if present
@@ -230,13 +234,13 @@ contains
             call center_data_sp(x, mu)
             call pca_svd_driver_sp(x, n, p, components, singular_values, err0)
          else
-            allocate(x_centered, source=x)
+            x_centered = x
             call center_data_sp(x_centered, mu)
             call pca_svd_driver_sp(x_centered, n, p, components, singular_values, err0)
          end if
 
       case ("eig", "cov")
-         allocate(x_centered, source=x)
+         x_centered = x
          call center_data_sp(x_centered, mu)
          call pca_eigh_driver_sp(x_centered, n, p, components, singular_values, err0)
 
@@ -259,16 +263,30 @@ contains
       type(linalg_state_type), intent(out), optional :: err
 
       type(linalg_state_type) :: err0
-      integer(ilp) :: n, p
+      integer(ilp) :: n, p, i
       real(dp), allocatable :: mu(:), x_centered(:,:)
       character(len=:), allocatable :: method_
 
       n = size(x, 1, kind=ilp)
       p = size(x, 2, kind=ilp)
+
+      ! Input validation: check for empty arrays
+      if (n < 1 .or. p < 1) then
+         err0 = linalg_state_type("pca", LINALG_VALUE_ERROR, &
+                "Input array must have at least 1 observation and 1 feature")
+         call err0%handle(err)
+         return
+      end if
+
+      ! Convert method to lowercase for case-insensitive comparison
       method_ = trim(adjustl(optval(method, "svd")))
+      do i = 1, len(method_)
+         if (method_(i:i) >= 'A' .and. method_(i:i) <= 'Z') then
+            method_(i:i) = achar(iachar(method_(i:i)) + 32)
+         end if
+      end do
 
       ! Calculate mean along dimension 1 (column means) using stdlib mean
-      allocate(mu(p))
       mu = mean(x, 1)
 
       ! Validate and assign x_mean if present
@@ -289,13 +307,13 @@ contains
             call center_data_dp(x, mu)
             call pca_svd_driver_dp(x, n, p, components, singular_values, err0)
          else
-            allocate(x_centered, source=x)
+            x_centered = x
             call center_data_dp(x_centered, mu)
             call pca_svd_driver_dp(x_centered, n, p, components, singular_values, err0)
          end if
 
       case ("eig", "cov")
-         allocate(x_centered, source=x)
+         x_centered = x
          call center_data_dp(x_centered, mu)
          call pca_eigh_driver_dp(x_centered, n, p, components, singular_values, err0)
 
@@ -323,7 +341,7 @@ contains
       p = size(x, 2, kind=ilp)
       nc = size(components, 1, kind=ilp)
       
-      allocate(x_centered, source=x)
+      x_centered = x
       if (present(x_mean)) call center_data_sp(x_centered, x_mean)
       
       ! x_transformed = x_centered * components^T using GEMM
@@ -343,7 +361,7 @@ contains
       p = size(x, 2, kind=ilp)
       nc = size(components, 1, kind=ilp)
       
-      allocate(x_centered, source=x)
+      x_centered = x
       if (present(x_mean)) call center_data_dp(x_centered, x_mean)
       
       ! x_transformed = x_centered * components^T using GEMM
