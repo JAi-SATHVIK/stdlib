@@ -1,19 +1,30 @@
-program test_pca
-    use stdlib_error, only: check
+module test_stats_pca
+    use testdrive, only: new_unittest, unittest_type, error_type, check
     use stdlib_kinds, only: sp, dp, xdp, qp
     use stdlib_stats, only: pca, pca_transform, pca_inverse_transform
     use stdlib_linalg_state, only: linalg_state_type
     implicit none
 
+    public :: collect_stats_pca
+
     real(sp), parameter :: sptol = 1000 * epsilon(1._sp)
     real(dp), parameter :: dptol = 1000 * epsilon(1._dp)
 
-    call test_pca_sp()
-    call test_pca_dp()
-
 contains
 
-    subroutine test_pca_sp()
+    !> Collect all exported unit tests
+    subroutine collect_stats_pca(testsuite)
+        !> Collection of tests
+        type(unittest_type), allocatable, intent(out) :: testsuite(:)
+
+        testsuite = [ &
+            new_unittest("test_pca_sp", test_pca_sp) , &
+            new_unittest("test_pca_dp", test_pca_dp) &
+        ]
+    end subroutine collect_stats_pca
+
+    subroutine test_pca_sp(error)
+        type(error_type), allocatable, intent(out) :: error
         real(sp) :: x(3, 2), components(2, 2), s(2), mu(2)
         real(sp) :: x_trans(3, 2), x_inv(3, 2)
         type(linalg_state_type) :: err
@@ -23,29 +34,44 @@ contains
 
         ! Test SVD method
         call pca(x, components, s, x_mean=mu, method="svd", err=err)
-        call check(err%ok(), "pca_sp svd err")
-        call check(all(abs(mu - [3.0_sp, 4.0_sp]) < sptol), "pca_sp svd mean")
+        call check(error, err%ok(), "pca_sp svd err")
+        if (allocated(error)) return
+
+        call check(error, all(abs(mu - [3.0_sp, 4.0_sp]) < sptol), "pca_sp svd mean")
+        if (allocated(error)) return
+
         ! First component should be approx [0.707, 0.707] (or negative)
-        call check(abs(abs(components(1,1)) - 1.0_sp/sqrt(2.0_sp)) < sptol, "pca_sp svd comp1")
-        call check(abs(s(1) - 4.0_sp) < sptol, "pca_sp svd s1")
-        call check(abs(s(2)) < sptol, "pca_sp svd s2")
+        call check(error, abs(abs(components(1,1)) - 1.0_sp/sqrt(2.0_sp)) < sptol, "pca_sp svd comp1")
+        if (allocated(error)) return
+        
+        call check(error, abs(s(1) - 4.0_sp) < sptol, "pca_sp svd s1")
+        if (allocated(error)) return
+        
+        call check(error, abs(s(2)) < sptol, "pca_sp svd s2")
+        if (allocated(error)) return
 
         ! Test Transform
         call pca_transform(x, components, mu, x_trans)
         ! Second dimension should be zero
-        call check(all(abs(x_trans(:, 2)) < sptol), "pca_sp transform")
+        call check(error, all(abs(x_trans(:, 2)) < sptol), "pca_sp transform")
+        if (allocated(error)) return
 
         ! Test Inverse Transform
         call pca_inverse_transform(x_trans, components, mu, x_inv)
-        call check(all(abs(x_inv - x) < sptol), "pca_sp inverse")
+        call check(error, all(abs(x_inv - x) < sptol), "pca_sp inverse")
+        if (allocated(error)) return
 
         ! Test EIG method
         call pca(x, components, s, method="eig", err=err)
-        call check(err%ok(), "pca_sp eig err")
-        call check(abs(s(1) - 4.0_sp) < sptol, "pca_sp eig s1")
+        call check(error, err%ok(), "pca_sp eig err")
+        if (allocated(error)) return
+
+        call check(error, abs(s(1) - 4.0_sp) < sptol, "pca_sp eig s1")
+        if (allocated(error)) return
 
     end subroutine test_pca_sp
-    subroutine test_pca_dp()
+    subroutine test_pca_dp(error)
+        type(error_type), allocatable, intent(out) :: error
         real(dp) :: x(3, 2), components(2, 2), s(2), mu(2)
         real(dp) :: x_trans(3, 2), x_inv(3, 2)
         type(linalg_state_type) :: err
@@ -55,27 +81,67 @@ contains
 
         ! Test SVD method
         call pca(x, components, s, x_mean=mu, method="svd", err=err)
-        call check(err%ok(), "pca_dp svd err")
-        call check(all(abs(mu - [3.0_dp, 4.0_dp]) < dptol), "pca_dp svd mean")
+        call check(error, err%ok(), "pca_dp svd err")
+        if (allocated(error)) return
+
+        call check(error, all(abs(mu - [3.0_dp, 4.0_dp]) < dptol), "pca_dp svd mean")
+        if (allocated(error)) return
+
         ! First component should be approx [0.707, 0.707] (or negative)
-        call check(abs(abs(components(1,1)) - 1.0_dp/sqrt(2.0_dp)) < dptol, "pca_dp svd comp1")
-        call check(abs(s(1) - 4.0_dp) < dptol, "pca_dp svd s1")
-        call check(abs(s(2)) < dptol, "pca_dp svd s2")
+        call check(error, abs(abs(components(1,1)) - 1.0_dp/sqrt(2.0_dp)) < dptol, "pca_dp svd comp1")
+        if (allocated(error)) return
+        
+        call check(error, abs(s(1) - 4.0_dp) < dptol, "pca_dp svd s1")
+        if (allocated(error)) return
+        
+        call check(error, abs(s(2)) < dptol, "pca_dp svd s2")
+        if (allocated(error)) return
 
         ! Test Transform
         call pca_transform(x, components, mu, x_trans)
         ! Second dimension should be zero
-        call check(all(abs(x_trans(:, 2)) < dptol), "pca_dp transform")
+        call check(error, all(abs(x_trans(:, 2)) < dptol), "pca_dp transform")
+        if (allocated(error)) return
 
         ! Test Inverse Transform
         call pca_inverse_transform(x_trans, components, mu, x_inv)
-        call check(all(abs(x_inv - x) < dptol), "pca_dp inverse")
+        call check(error, all(abs(x_inv - x) < dptol), "pca_dp inverse")
+        if (allocated(error)) return
 
         ! Test EIG method
         call pca(x, components, s, method="eig", err=err)
-        call check(err%ok(), "pca_dp eig err")
-        call check(abs(s(1) - 4.0_dp) < dptol, "pca_dp eig s1")
+        call check(error, err%ok(), "pca_dp eig err")
+        if (allocated(error)) return
+
+        call check(error, abs(s(1) - 4.0_dp) < dptol, "pca_dp eig s1")
+        if (allocated(error)) return
 
     end subroutine test_pca_dp
 
-end program test_pca
+end module test_stats_pca
+
+program tester
+    use, intrinsic :: iso_fortran_env, only : error_unit
+    use testdrive, only : run_testsuite, new_testsuite, testsuite_type
+    use test_stats_pca, only : collect_stats_pca
+    implicit none
+    integer :: stat, is
+    type(testsuite_type), allocatable :: testsuites(:)
+    character(len=*), parameter :: fmt = '("#", *(1x, a))'
+
+    stat = 0
+
+    testsuites = [ &
+        new_testsuite("stats_pca", collect_stats_pca) &
+        ]
+
+    do is = 1, size(testsuites)
+        write(error_unit, fmt) "Testing:", testsuites(is)%name
+        call run_testsuite(testsuites(is)%collect, error_unit, stat)
+    end do
+
+    if (stat > 0) then
+        write(error_unit, '(i0, 1x, a)') stat, "test(s) failed!"
+        error stop
+    end if
+end program tester
