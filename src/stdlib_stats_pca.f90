@@ -5,6 +5,7 @@ submodule (stdlib_stats) stdlib_stats_pca
   use stdlib_linalg_constants, only: ilp
   use stdlib_linalg_blas, only: gemm, syrk
   use stdlib_linalg_state, only: linalg_state_type, LINALG_ERROR, LINALG_VALUE_ERROR
+  use stdlib_ascii, only: to_lower
   implicit none
 
 contains
@@ -121,16 +122,13 @@ contains
          vectors = vectors(:, p:1:-1)
 
          ! Assign results with safety bounds checks
-         m = min(size(components, 1, kind=ilp), p)
-         m = min(m, size(singular_values, 1, kind=ilp))
+         m = min(size(components, 1, kind=ilp), size(singular_values, 1, kind=ilp), p)
          
          ! Components are eigenvectors as rows (transpose of vectors columns)
          components(1:m, :) = transpose(vectors(:, 1:m))
          
          ! Convert eigenvalues to singular values: s = sqrt(lambda * (n-1))
-         where (lambda(1:m) > 0.0_sp)
-            singular_values(1:m) = sqrt(lambda(1:m) * real(n-1, sp))
-         end where
+         where (lambda(1:m) > 0.0_sp) singular_values(1:m) = sqrt(lambda(1:m) * real(n-1, sp))
       end if
     end subroutine pca_eigh_driver_sp
     subroutine pca_eigh_driver_dp(x_centered, n, p, components, singular_values, err)
@@ -166,16 +164,13 @@ contains
          vectors = vectors(:, p:1:-1)
 
          ! Assign results with safety bounds checks
-         m = min(size(components, 1, kind=ilp), p)
-         m = min(m, size(singular_values, 1, kind=ilp))
+         m = min(size(components, 1, kind=ilp), size(singular_values, 1, kind=ilp), p)
          
          ! Components are eigenvectors as rows (transpose of vectors columns)
          components(1:m, :) = transpose(vectors(:, 1:m))
          
          ! Convert eigenvalues to singular values: s = sqrt(lambda * (n-1))
-         where (lambda(1:m) > 0.0_dp)
-            singular_values(1:m) = sqrt(lambda(1:m) * real(n-1, dp))
-         end where
+         where (lambda(1:m) > 0.0_dp) singular_values(1:m) = sqrt(lambda(1:m) * real(n-1, dp))
       end if
     end subroutine pca_eigh_driver_dp
 
@@ -206,12 +201,7 @@ contains
       end if
 
       ! Convert method to lowercase for case-insensitive comparison
-      method_ = trim(adjustl(optval(method, "svd")))
-      do i = 1, len(method_)
-         if (method_(i:i) >= 'A' .and. method_(i:i) <= 'Z') then
-            method_(i:i) = achar(iachar(method_(i:i)) + 32)
-         end if
-      end do
+      method_ = to_lower(trim(adjustl(optval(method, "svd"))))
 
       ! Calculate mean along dimension 1 (column means) using stdlib mean
       mu = mean(x, 1)
@@ -279,12 +269,7 @@ contains
       end if
 
       ! Convert method to lowercase for case-insensitive comparison
-      method_ = trim(adjustl(optval(method, "svd")))
-      do i = 1, len(method_)
-         if (method_(i:i) >= 'A' .and. method_(i:i) <= 'Z') then
-            method_(i:i) = achar(iachar(method_(i:i)) + 32)
-         end if
-      end do
+      method_ = to_lower(trim(adjustl(optval(method, "svd"))))
 
       ! Calculate mean along dimension 1 (column means) using stdlib mean
       mu = mean(x, 1)
