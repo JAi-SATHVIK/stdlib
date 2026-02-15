@@ -1913,6 +1913,12 @@ contains
         real(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -1929,6 +1935,12 @@ contains
         real(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -1945,6 +1957,12 @@ contains
         real(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -1961,6 +1979,12 @@ contains
         real(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -1977,6 +2001,12 @@ contains
         real(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -1993,6 +2023,12 @@ contains
         real(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -2009,6 +2045,12 @@ contains
         real(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -2025,6 +2067,12 @@ contains
         real(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum((x - mean)**2, mask) / (n -&
@@ -2041,6 +2089,12 @@ contains
         complex(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2057,6 +2111,12 @@ contains
         complex(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2073,6 +2133,12 @@ contains
         complex(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2089,6 +2155,12 @@ contains
         complex(sp) :: mean
 
         n = real(count(mask, kind = int64), sp)
+
+        if (n == 0._sp) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2105,6 +2177,12 @@ contains
         complex(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2121,6 +2199,12 @@ contains
         complex(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2137,6 +2221,12 @@ contains
         complex(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2153,6 +2243,12 @@ contains
         complex(dp) :: mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(x, mask) / n
 
           res = sum(abs(x - mean)**2, mask) / (n -&
@@ -2170,6 +2266,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2185,6 +2287,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2200,6 +2308,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2215,6 +2329,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2230,6 +2350,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2245,6 +2371,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2260,6 +2392,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2275,6 +2413,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2290,6 +2434,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2305,6 +2455,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2320,6 +2476,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2335,6 +2497,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2350,6 +2518,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2365,6 +2539,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2380,6 +2560,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2395,6 +2581,12 @@ contains
         real(dp) :: n, mean
 
         n = real(count(mask, kind = int64), dp)
+
+        if (n == 0._dp) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         mean = sum(real(x, dp), mask) / n
 
         res = sum((real(x, dp) - mean)**2, mask) / (n -&
@@ -2418,7 +2610,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              if (n > 0) then
+                mean = sum(x, dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
                 res = res + merge( (x(i) - mean)**2,&
                                   0._sp,&
@@ -2445,7 +2641,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(i, :) - mean)**2,&
                                   0._sp,&
@@ -2453,7 +2653,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, i) - mean)**2,&
                                   0._sp,&
@@ -2480,7 +2684,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(i, :, :) - mean)**2,&
                                   0._sp,&
@@ -2488,7 +2696,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, i, :) - mean)**2,&
                                   0._sp,&
@@ -2496,7 +2708,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, :, i) - mean)**2,&
                                   0._sp,&
@@ -2526,7 +2742,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(i, :, :, :) - mean)**2,&
                                   0._sp,&
@@ -2534,7 +2754,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, i, :, :) - mean)**2,&
                                   0._sp,&
@@ -2542,7 +2766,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, :, i, :) - mean)**2,&
                                   0._sp,&
@@ -2550,7 +2778,11 @@ contains
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, :, :, i) - mean)**2,&
                                   0._sp,&
@@ -2577,7 +2809,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              if (n > 0) then
+                mean = sum(x, dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
                 res = res + merge( (x(i) - mean)**2,&
                                   0._dp,&
@@ -2604,7 +2840,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(i, :) - mean)**2,&
                                   0._dp,&
@@ -2612,7 +2852,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, i) - mean)**2,&
                                   0._dp,&
@@ -2639,7 +2883,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(i, :, :) - mean)**2,&
                                   0._dp,&
@@ -2647,7 +2895,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, i, :) - mean)**2,&
                                   0._dp,&
@@ -2655,7 +2907,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, :, i) - mean)**2,&
                                   0._dp,&
@@ -2685,7 +2941,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(i, :, :, :) - mean)**2,&
                                   0._dp,&
@@ -2693,7 +2953,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, i, :, :) - mean)**2,&
                                   0._dp,&
@@ -2701,7 +2965,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, :, i, :) - mean)**2,&
                                   0._dp,&
@@ -2709,7 +2977,11 @@ contains
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( (x(:, :, :, i) - mean)**2,&
                                   0._dp,&
@@ -2736,7 +3008,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              if (n > 0) then
+                mean = sum(x, dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i) - mean)**2,&
                                   0._sp,&
@@ -2763,7 +3039,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i, :) - mean)**2,&
                                   0._sp,&
@@ -2771,7 +3051,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, i) - mean)**2,&
                                   0._sp,&
@@ -2798,7 +3082,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i, :, :) - mean)**2,&
                                   0._sp,&
@@ -2806,7 +3094,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, i, :) - mean)**2,&
                                   0._sp,&
@@ -2814,7 +3106,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, :, i) - mean)**2,&
                                   0._sp,&
@@ -2844,7 +3140,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i, :, :, :) - mean)**2,&
                                   0._sp,&
@@ -2852,7 +3152,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, i, :, :) - mean)**2,&
                                   0._sp,&
@@ -2860,7 +3164,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, :, i, :) - mean)**2,&
                                   0._sp,&
@@ -2868,7 +3176,11 @@ contains
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, :, :, i) - mean)**2,&
                                   0._sp,&
@@ -2895,7 +3207,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              if (n > 0) then
+                mean = sum(x, dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i) - mean)**2,&
                                   0._dp,&
@@ -2922,7 +3238,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i, :) - mean)**2,&
                                   0._dp,&
@@ -2930,7 +3250,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, i) - mean)**2,&
                                   0._dp,&
@@ -2957,7 +3281,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i, :, :) - mean)**2,&
                                   0._dp,&
@@ -2965,7 +3293,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, i, :) - mean)**2,&
                                   0._dp,&
@@ -2973,7 +3305,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, :, i) - mean)**2,&
                                   0._dp,&
@@ -3003,7 +3339,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(i, :, :, :) - mean)**2,&
                                   0._dp,&
@@ -3011,7 +3351,11 @@ contains
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, i, :, :) - mean)**2,&
                                   0._dp,&
@@ -3019,7 +3363,11 @@ contains
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, :, i, :) - mean)**2,&
                                   0._dp,&
@@ -3027,7 +3375,11 @@ contains
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(x, dim, mask) / n
+              where (n > 0)
+                mean = sum(x, dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
                 res = res + merge( abs(x(:, :, :, i) - mean)**2,&
                                   0._dp,&
@@ -3056,7 +3408,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              if (n > 0) then
+                mean = sum(real(x, dp), dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
               res = res + merge((real(x(i), dp) - mean)**2,&
                                   0._dp, mask(i))
@@ -3082,14 +3438,22 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :), dp) - mean)**2,&
                                   0._dp, mask(i, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i), dp) - mean)**2,&
                                   0._dp, mask(:, i))
@@ -3115,21 +3479,33 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, i))
@@ -3158,28 +3534,44 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, :, i, :))
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, :, i))
@@ -3205,7 +3597,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              if (n > 0) then
+                mean = sum(real(x, dp), dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
               res = res + merge((real(x(i), dp) - mean)**2,&
                                   0._dp, mask(i))
@@ -3231,14 +3627,22 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :), dp) - mean)**2,&
                                   0._dp, mask(i, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i), dp) - mean)**2,&
                                   0._dp, mask(:, i))
@@ -3264,21 +3668,33 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, i))
@@ -3307,28 +3723,44 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, :, i, :))
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, :, i))
@@ -3354,7 +3786,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              if (n > 0) then
+                mean = sum(real(x, dp), dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
               res = res + merge((real(x(i), dp) - mean)**2,&
                                   0._dp, mask(i))
@@ -3380,14 +3816,22 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :), dp) - mean)**2,&
                                   0._dp, mask(i, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i), dp) - mean)**2,&
                                   0._dp, mask(:, i))
@@ -3413,21 +3857,33 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, i))
@@ -3456,28 +3912,44 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, :, i, :))
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, :, i))
@@ -3503,7 +3975,11 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              if (n > 0) then
+                mean = sum(real(x, dp), dim, mask) / n
+              else
+                mean = 0
+              end if
             do i = 1, size(x, dim)
               res = res + merge((real(x(i), dp) - mean)**2,&
                                   0._dp, mask(i))
@@ -3529,14 +4005,22 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :), dp) - mean)**2,&
                                   0._dp, mask(i, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i), dp) - mean)**2,&
                                   0._dp, mask(:, i))
@@ -3562,21 +4046,33 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, i))
@@ -3605,28 +4101,44 @@ contains
         select case(dim)
           case(1)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(i, :, :, :), dp) - mean)**2,&
                                   0._dp, mask(i, :, :, :))
             end do
           case(2)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, i, :, :), dp) - mean)**2,&
                                   0._dp, mask(:, i, :, :))
             end do
           case(3)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, i, :), dp) - mean)**2,&
                                   0._dp, mask(:, :, i, :))
             end do
           case(4)
             n = count(mask, dim)
-            mean = sum(real(x, dp), dim, mask) / n
+              where (n > 0)
+                mean = sum(real(x, dp), dim, mask) / n
+              elsewhere
+                mean = 0
+              end where
             do i = 1, size(x, dim)
               res = res + merge((real(x(:, :, :, i), dp) - mean)**2,&
                                   0._dp, mask(:, :, :, i))

@@ -588,6 +588,11 @@ contains
                 0._sp,&
                 mask_)
 
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
+
               res(j, i) = dot_product( centerj_, centeri_)&
                /sqrt(dot_product( centeri_, centeri_)*&
                      dot_product( centerj_, centerj_))
@@ -604,6 +609,11 @@ contains
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
                 0._sp,&
                 mask_)
+
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
 
               res(j, i) = dot_product( centeri_, centerj_)&
                /sqrt(dot_product( centeri_, centeri_)*&
@@ -639,6 +649,11 @@ contains
                 0._dp,&
                 mask_)
 
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
+
               res(j, i) = dot_product( centerj_, centeri_)&
                /sqrt(dot_product( centeri_, centeri_)*&
                      dot_product( centerj_, centerj_))
@@ -655,6 +670,11 @@ contains
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
                 0._dp,&
                 mask_)
+
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
 
               res(j, i) = dot_product( centeri_, centerj_)&
                /sqrt(dot_product( centeri_, centeri_)*&
@@ -690,6 +710,11 @@ contains
                 cmplx(0,0,kind=sp),&
                 mask_)
 
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
+
               res(j, i) = dot_product( centerj_, centeri_)&
                /sqrt(dot_product( centeri_, centeri_)*&
                      dot_product( centerj_, centerj_))
@@ -706,6 +731,11 @@ contains
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
                 cmplx(0,0,kind=sp),&
                 mask_)
+
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
 
               res(j, i) = dot_product( centeri_, centerj_)&
                /sqrt(dot_product( centeri_, centeri_)*&
@@ -741,6 +771,11 @@ contains
                 cmplx(0,0,kind=dp),&
                 mask_)
 
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
+
               res(j, i) = dot_product( centerj_, centeri_)&
                /sqrt(dot_product( centeri_, centeri_)*&
                      dot_product( centerj_, centerj_))
@@ -757,6 +792,11 @@ contains
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
                 cmplx(0,0,kind=dp),&
                 mask_)
+
+              if (count(mask_) < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
 
               res(j, i) = dot_product( centeri_, centerj_)&
                /sqrt(dot_product( centeri_, centeri_)*&
@@ -790,6 +830,11 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
              res(j, i) = dot_product( centerj_, centeri_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
                        dot_product( centerj_, centerj_))
@@ -802,6 +847,11 @@ contains
              mask_ = mask(i, :) .and. mask(j, :)
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
+
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
 
              res(j, i) = dot_product( centeri_, centerj_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
@@ -833,6 +883,11 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
              res(j, i) = dot_product( centerj_, centeri_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
                        dot_product( centerj_, centerj_))
@@ -845,6 +900,11 @@ contains
              mask_ = mask(i, :) .and. mask(j, :)
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
+
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
 
              res(j, i) = dot_product( centeri_, centerj_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
@@ -876,6 +936,11 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
              res(j, i) = dot_product( centerj_, centeri_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
                        dot_product( centerj_, centerj_))
@@ -888,6 +953,11 @@ contains
              mask_ = mask(i, :) .and. mask(j, :)
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
+
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
 
              res(j, i) = dot_product( centeri_, centerj_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
@@ -919,6 +989,11 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
              res(j, i) = dot_product( centerj_, centeri_)&
                  /sqrt(dot_product( centeri_, centeri_)*&
                        dot_product( centerj_, centerj_))
@@ -931,6 +1006,11 @@ contains
              mask_ = mask(i, :) .and. mask(j, :)
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
+
+             if (count(mask_) < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
 
              res(j, i) = dot_product( centeri_, centerj_)&
                  /sqrt(dot_product( centeri_, centeri_)*&

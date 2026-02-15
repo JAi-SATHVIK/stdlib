@@ -1018,6 +1018,11 @@ contains
         logical, intent(in) :: mask(:)
         real(sp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
       end function mean_mask_all_1_rsp_rsp
@@ -1025,6 +1030,11 @@ contains
         real(sp), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         real(sp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
@@ -1034,6 +1044,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         real(sp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
       end function mean_mask_all_3_rsp_rsp
@@ -1041,6 +1056,11 @@ contains
         real(sp), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         real(sp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
@@ -1050,6 +1070,11 @@ contains
         logical, intent(in) :: mask(:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_1_rdp_rdp
@@ -1057,6 +1082,11 @@ contains
         real(dp), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
@@ -1066,6 +1096,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_3_rdp_rdp
@@ -1073,6 +1108,11 @@ contains
         real(dp), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
@@ -1082,6 +1122,11 @@ contains
         logical, intent(in) :: mask(:)
         complex(sp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
       end function mean_mask_all_1_csp_csp
@@ -1089,6 +1134,11 @@ contains
         complex(sp), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         complex(sp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
@@ -1098,6 +1148,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         complex(sp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
       end function mean_mask_all_3_csp_csp
@@ -1105,6 +1160,11 @@ contains
         complex(sp), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         complex(sp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._sp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), sp)
 
@@ -1114,6 +1174,11 @@ contains
         logical, intent(in) :: mask(:)
         complex(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_1_cdp_cdp
@@ -1121,6 +1186,11 @@ contains
         complex(dp), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         complex(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
@@ -1130,6 +1200,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         complex(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_3_cdp_cdp
@@ -1137,6 +1212,11 @@ contains
         complex(dp), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         complex(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(x, mask) / real(count(mask, kind = int64), dp)
 
@@ -1148,6 +1228,11 @@ contains
         logical, intent(in) :: mask(:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_1_iint8_dp
@@ -1155,6 +1240,11 @@ contains
         integer(int8), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1164,6 +1254,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_3_iint8_dp
@@ -1171,6 +1266,11 @@ contains
         integer(int8), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1180,6 +1280,11 @@ contains
         logical, intent(in) :: mask(:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_1_iint16_dp
@@ -1187,6 +1292,11 @@ contains
         integer(int16), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1196,6 +1306,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_3_iint16_dp
@@ -1203,6 +1318,11 @@ contains
         integer(int16), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1212,6 +1332,11 @@ contains
         logical, intent(in) :: mask(:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_1_iint32_dp
@@ -1219,6 +1344,11 @@ contains
         integer(int32), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1228,6 +1358,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_3_iint32_dp
@@ -1235,6 +1370,11 @@ contains
         integer(int32), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1244,6 +1384,11 @@ contains
         logical, intent(in) :: mask(:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_1_iint64_dp
@@ -1251,6 +1396,11 @@ contains
         integer(int64), intent(in) :: x(:,:)
         logical, intent(in) :: mask(:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1260,6 +1410,11 @@ contains
         logical, intent(in) :: mask(:,:,:)
         real(dp) :: res
 
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
+
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
       end function mean_mask_all_3_iint64_dp
@@ -1267,6 +1422,11 @@ contains
         integer(int64), intent(in) :: x(:,:,:,:)
         logical, intent(in) :: mask(:,:,:,:)
         real(dp) :: res
+
+        if (count(mask) == 0) then
+          res = ieee_value(1._dp, ieee_quiet_nan)
+          return
+        end if
 
         res = sum(real(x, dp), mask) / real(count(mask, kind = int64), dp)
 
@@ -1279,7 +1439,11 @@ contains
         real(sp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            else
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1292,7 +1456,11 @@ contains
         real(sp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            elsewhere
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1305,7 +1473,11 @@ contains
         real(sp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            elsewhere
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1319,7 +1491,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            elsewhere
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1332,7 +1508,11 @@ contains
         real(dp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            else
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1345,7 +1525,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1358,7 +1542,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1372,7 +1560,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1385,7 +1577,11 @@ contains
         complex(sp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            else
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1398,7 +1594,11 @@ contains
         complex(sp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            elsewhere
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1411,7 +1611,11 @@ contains
         complex(sp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            elsewhere
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1425,7 +1629,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), sp)
+            elsewhere
+              res = ieee_value(1._sp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1438,7 +1646,11 @@ contains
         complex(dp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            else
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1451,7 +1663,11 @@ contains
         complex(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1464,7 +1680,11 @@ contains
         complex(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1478,7 +1698,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(x, dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1493,7 +1717,11 @@ contains
         real(dp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            else
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1506,7 +1734,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1519,7 +1751,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1533,7 +1769,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1546,7 +1786,11 @@ contains
         real(dp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            else
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1559,7 +1803,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1572,7 +1820,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1586,7 +1838,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1599,7 +1855,11 @@ contains
         real(dp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            else
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1612,7 +1872,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1625,7 +1889,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1639,7 +1907,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1652,7 +1924,11 @@ contains
         real(dp) :: res
 
         if (dim >= 1 .and. dim <= 1) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            if (count(mask) == 0) then
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            else
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            end if
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1665,7 +1941,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim))
 
         if (dim >= 1 .and. dim <= 2) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1678,7 +1958,11 @@ contains
         real(dp) :: res(merge(size(x, 1), size(x, 2), mask=1<dim), merge(size(x, 2), size(x, 3), mask=2<dim))
 
         if (dim >= 1 .and. dim <= 3) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
@@ -1692,7 +1976,11 @@ contains
             & size(x, 4), mask=3<dim))
 
         if (dim >= 1 .and. dim <= 4) then
-          res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            where (count(mask, dim) > 0)
+              res = sum(real(x, dp), dim, mask) / real(count(mask, dim), dp)
+            elsewhere
+              res = ieee_value(1._dp, ieee_quiet_nan)
+            end where
         else
           call error_stop("ERROR (mean): wrong dimension")
         end if
