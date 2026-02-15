@@ -525,6 +525,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -542,6 +546,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -578,6 +586,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -595,6 +607,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -631,6 +647,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -648,6 +668,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -684,6 +708,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -701,6 +729,10 @@ contains
                 mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -735,6 +767,10 @@ contains
               centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -748,6 +784,10 @@ contains
               centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -780,6 +820,10 @@ contains
               centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -793,6 +837,10 @@ contains
               centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -825,6 +873,10 @@ contains
               centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -838,6 +890,10 @@ contains
               centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -870,6 +926,10 @@ contains
               centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -883,6 +943,10 @@ contains
               centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
               n = count(mask_)
+              if (n < 2) then
+                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+                cycle
+              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
