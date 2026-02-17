@@ -511,24 +511,29 @@ contains
       real(sp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(sp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      real(sp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(:, i) .and. mask(:, j)
-             centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(:, i), mask = mask_) / real(n, sp)
+             mean_j = sum(x(:, j), mask = mask_) / real(n, sp)
+
+             centeri_ = merge( x(:, i) - mean_i,&
                 0._sp,&
                 mask_)
-             centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),&
+             centerj_ = merge( x(:, j) - mean_j,&
                 0._sp,&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -538,18 +543,22 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(i, :) .and. mask(j, :)
-             centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(i, :), mask = mask_) / real(n, sp)
+             mean_j = sum(x(j, :), mask = mask_) / real(n, sp)
+
+             centeri_ = merge( x(i, :) - mean_i,&
                 0._sp,&
                 mask_)
-             centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
+             centerj_ = merge( x(j, :) - mean_j,&
                 0._sp,&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -572,24 +581,29 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      real(dp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(:, i) .and. mask(:, j)
-             centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(:, i), mask = mask_) / real(n, dp)
+             mean_j = sum(x(:, j), mask = mask_) / real(n, dp)
+
+             centeri_ = merge( x(:, i) - mean_i,&
                 0._dp,&
                 mask_)
-             centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),&
+             centerj_ = merge( x(:, j) - mean_j,&
                 0._dp,&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -599,18 +613,22 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(i, :) .and. mask(j, :)
-             centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(i, :), mask = mask_) / real(n, dp)
+             mean_j = sum(x(j, :), mask = mask_) / real(n, dp)
+
+             centeri_ = merge( x(i, :) - mean_i,&
                 0._dp,&
                 mask_)
-             centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
+             centerj_ = merge( x(j, :) - mean_j,&
                 0._dp,&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -633,24 +651,29 @@ contains
       complex(sp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       complex(sp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      complex(sp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(:, i) .and. mask(:, j)
-             centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(:, i), mask = mask_) / real(n, sp)
+             mean_j = sum(x(:, j), mask = mask_) / real(n, sp)
+
+             centeri_ = merge( x(:, i) - mean_i,&
                 cmplx(0,0,kind=sp),&
                 mask_)
-             centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),&
+             centerj_ = merge( x(:, j) - mean_j,&
                 cmplx(0,0,kind=sp),&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -660,18 +683,22 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(i, :) .and. mask(j, :)
-             centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(i, :), mask = mask_) / real(n, sp)
+             mean_j = sum(x(j, :), mask = mask_) / real(n, sp)
+
+             centeri_ = merge( x(i, :) - mean_i,&
                 cmplx(0,0,kind=sp),&
                 mask_)
-             centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
+             centerj_ = merge( x(j, :) - mean_j,&
                 cmplx(0,0,kind=sp),&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -694,24 +721,29 @@ contains
       complex(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       complex(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      complex(dp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(:, i) .and. mask(:, j)
-             centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(:, i), mask = mask_) / real(n, dp)
+             mean_j = sum(x(:, j), mask = mask_) / real(n, dp)
+
+             centeri_ = merge( x(:, i) - mean_i,&
                 cmplx(0,0,kind=dp),&
                 mask_)
-             centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),&
+             centerj_ = merge( x(:, j) - mean_j,&
                 cmplx(0,0,kind=dp),&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -721,18 +753,22 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
              mask_ = mask(i, :) .and. mask(j, :)
-             centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),&
+             n = count(mask_)
+             if (n < 2) then
+               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
+               cycle
+             end if
+
+             mean_i = sum(x(i, :), mask = mask_) / real(n, dp)
+             mean_j = sum(x(j, :), mask = mask_) / real(n, dp)
+
+             centeri_ = merge( x(i, :) - mean_i,&
                 cmplx(0,0,kind=dp),&
                 mask_)
-             centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),&
+             centerj_ = merge( x(j, :) - mean_j,&
                 cmplx(0,0,kind=dp),&
                 mask_)
 
-              n = count(mask_)
-              if (n < 2) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-                cycle
-              end if
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -757,20 +793,25 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      real(dp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(:, i) .and. mask(:, j)
-              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(:, i), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(:, j), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(:, i), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(:, j), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -780,14 +821,18 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(i, :) .and. mask(j, :)
-              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(i, :), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(j, :), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(i, :), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(j, :), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -810,20 +855,25 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      real(dp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(:, i) .and. mask(:, j)
-              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(:, i), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(:, j), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(:, i), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(:, j), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -833,14 +883,18 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(i, :) .and. mask(j, :)
-              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(i, :), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(j, :), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(i, :), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(j, :), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -863,20 +917,25 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      real(dp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(:, i) .and. mask(:, j)
-              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(:, i), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(:, j), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(:, i), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(:, j), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -886,14 +945,18 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(i, :) .and. mask(j, :)
-              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(i, :), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(j, :), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(i, :), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(j, :), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -916,20 +979,25 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
+      real(dp) :: mean_i, mean_j
 
       select case(dim)
         case(1)
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(:, i) .and. mask(:, j)
-              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(:, i), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(:, j), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(:, i), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(:, j), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centerj_, centeri_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
@@ -939,14 +1007,18 @@ contains
           do i = 1, size(res, 2)
             do j = 1, size(res, 1)
               mask_ = mask(i, :) .and. mask(j, :)
-              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
-              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
-
               n = count(mask_)
               if (n < 2) then
                 res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
                 cycle
               end if
+
+              mean_i = sum(real(x(i, :), dp), mask = mask_) / real(n, dp)
+              mean_j = sum(real(x(j, :), dp), mask = mask_) / real(n, dp)
+
+              centeri_ = merge( real(x(i, :), dp) - mean_i, 0._dp, mask_)
+              centerj_ = merge( real(x(j, :), dp) - mean_j, 0._dp, mask_)
+
               res(j, i) = dot_product( centeri_, centerj_)&
                            / (n - merge(1, 0,&
                             optval(corrected, .true.) .and. n > 0))
