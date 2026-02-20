@@ -4,7 +4,7 @@ module test_stats_median
     use testdrive, only : new_unittest, unittest_type, error_type, check
     use stdlib_stats, only: median
     use stdlib_kinds, only : int8, int16, int32, int64, sp, dp, xdp, qp
-    use, intrinsic :: ieee_arithmetic, only : ieee_is_nan
+    use, intrinsic :: ieee_arithmetic, only : ieee_is_nan, ieee_value, ieee_quiet_nan
     implicit none
     private
 
@@ -397,7 +397,31 @@ contains
         call check(error&
                     , any(ieee_is_nan(median(d3_int8, 1, d3_int8 > 0)))&
                     , 'median(d3_int8, 1, d3_int8 > 0): should contain at least 1 IEEE NaN')
+        if (allocated(error)) return
 
+        ! Regression: verify median_mask processes all slices when one
+        ! slice has zero valid elements (n==0). Previously, the function
+        ! used 'return' instead of 'cycle', aborting all subsequent slices.
+        block
+            integer(int8) :: xm(3, 3)
+            logical :: mm(3, 3)
+            real(dp) :: rm(3)
+            xm(:, 1) = [integer(int8) :: 1, 2, 3]
+            xm(:, 2) = [integer(int8) :: 4, 5, 6]
+            xm(:, 3) = [integer(int8) :: 7, 8, 9]
+            mm = .true.
+            mm(:, 2) = .false.
+            rm = median(xm, 1, mm)
+            call check(error, rm(1), 2.0_dp&
+                        , 'median_mask: first slice should be 2.0')
+            if (allocated(error)) return
+            call check(error, ieee_is_nan(rm(2))&
+                        , 'median_mask: masked slice should be NaN')
+            if (allocated(error)) return
+            call check(error, rm(3), 8.0_dp&
+                        , 'median_mask: slice after masked should be 8.0')
+            if (allocated(error)) return
+        end block
     end subroutine
     subroutine test_stats_median_size_int16(error)
         !> Error handling
@@ -673,7 +697,31 @@ contains
         call check(error&
                     , any(ieee_is_nan(median(d3_int16, 1, d3_int16 > 0)))&
                     , 'median(d3_int16, 1, d3_int16 > 0): should contain at least 1 IEEE NaN')
+        if (allocated(error)) return
 
+        ! Regression: verify median_mask processes all slices when one
+        ! slice has zero valid elements (n==0). Previously, the function
+        ! used 'return' instead of 'cycle', aborting all subsequent slices.
+        block
+            integer(int16) :: xm(3, 3)
+            logical :: mm(3, 3)
+            real(dp) :: rm(3)
+            xm(:, 1) = [integer(int16) :: 1, 2, 3]
+            xm(:, 2) = [integer(int16) :: 4, 5, 6]
+            xm(:, 3) = [integer(int16) :: 7, 8, 9]
+            mm = .true.
+            mm(:, 2) = .false.
+            rm = median(xm, 1, mm)
+            call check(error, rm(1), 2.0_dp&
+                        , 'median_mask: first slice should be 2.0')
+            if (allocated(error)) return
+            call check(error, ieee_is_nan(rm(2))&
+                        , 'median_mask: masked slice should be NaN')
+            if (allocated(error)) return
+            call check(error, rm(3), 8.0_dp&
+                        , 'median_mask: slice after masked should be 8.0')
+            if (allocated(error)) return
+        end block
     end subroutine
     subroutine test_stats_median_size_int32(error)
         !> Error handling
@@ -949,7 +997,31 @@ contains
         call check(error&
                     , any(ieee_is_nan(median(d3_int32, 1, d3_int32 > 0)))&
                     , 'median(d3_int32, 1, d3_int32 > 0): should contain at least 1 IEEE NaN')
+        if (allocated(error)) return
 
+        ! Regression: verify median_mask processes all slices when one
+        ! slice has zero valid elements (n==0). Previously, the function
+        ! used 'return' instead of 'cycle', aborting all subsequent slices.
+        block
+            integer(int32) :: xm(3, 3)
+            logical :: mm(3, 3)
+            real(dp) :: rm(3)
+            xm(:, 1) = [integer(int32) :: 1, 2, 3]
+            xm(:, 2) = [integer(int32) :: 4, 5, 6]
+            xm(:, 3) = [integer(int32) :: 7, 8, 9]
+            mm = .true.
+            mm(:, 2) = .false.
+            rm = median(xm, 1, mm)
+            call check(error, rm(1), 2.0_dp&
+                        , 'median_mask: first slice should be 2.0')
+            if (allocated(error)) return
+            call check(error, ieee_is_nan(rm(2))&
+                        , 'median_mask: masked slice should be NaN')
+            if (allocated(error)) return
+            call check(error, rm(3), 8.0_dp&
+                        , 'median_mask: slice after masked should be 8.0')
+            if (allocated(error)) return
+        end block
     end subroutine
     subroutine test_stats_median_size_int64(error)
         !> Error handling
@@ -1225,7 +1297,31 @@ contains
         call check(error&
                     , any(ieee_is_nan(median(d3_int64, 1, d3_int64 > 0)))&
                     , 'median(d3_int64, 1, d3_int64 > 0): should contain at least 1 IEEE NaN')
+        if (allocated(error)) return
 
+        ! Regression: verify median_mask processes all slices when one
+        ! slice has zero valid elements (n==0). Previously, the function
+        ! used 'return' instead of 'cycle', aborting all subsequent slices.
+        block
+            integer(int64) :: xm(3, 3)
+            logical :: mm(3, 3)
+            real(dp) :: rm(3)
+            xm(:, 1) = [integer(int64) :: 1, 2, 3]
+            xm(:, 2) = [integer(int64) :: 4, 5, 6]
+            xm(:, 3) = [integer(int64) :: 7, 8, 9]
+            mm = .true.
+            mm(:, 2) = .false.
+            rm = median(xm, 1, mm)
+            call check(error, rm(1), 2.0_dp&
+                        , 'median_mask: first slice should be 2.0')
+            if (allocated(error)) return
+            call check(error, ieee_is_nan(rm(2))&
+                        , 'median_mask: masked slice should be NaN')
+            if (allocated(error)) return
+            call check(error, rm(3), 8.0_dp&
+                        , 'median_mask: slice after masked should be 8.0')
+            if (allocated(error)) return
+        end block
     end subroutine
 
     subroutine test_stats_median_size_sp(error)
@@ -1363,6 +1459,28 @@ contains
                     ,'median(d2_sp, 2): uncorrect answer')
         if (allocated(error)) return
 
+        ! Regression: verify median processes all slices when one
+        ! slice contains NaN. Previously, the function used 'return'
+        ! instead of 'cycle' for rank > 1, aborting all subsequent slices.
+        block
+            real(sp) :: xn(3, 3)
+            real(sp) :: rn(3)
+            xn(:, 1) = [1.0_sp, ieee_value(1.0_sp, ieee_quiet_nan), 3.0_sp]
+            xn(:, 2) = [4.0_sp, 5.0_sp, 6.0_sp]
+            xn(:, 3) = [7.0_sp, 8.0_sp, 9.0_sp]
+            rn = median(xn, 1)
+            call check(error, ieee_is_nan(rn(1))&
+                        , 'median: NaN slice should propagate NaN')
+            if (allocated(error)) return
+            call check(error, rn(2), 5.0_sp&
+                        , 'median: slice after NaN should be 5.0'&
+                        , thr = sptol)
+            if (allocated(error)) return
+            call check(error, rn(3), 8.0_sp&
+                        , 'median: slice after NaN should be 8.0'&
+                        , thr = sptol)
+            if (allocated(error)) return
+        end block
     end subroutine
 
     subroutine test_stats_median_odd_sp(error)
@@ -1646,6 +1764,28 @@ contains
                     ,'median(d2_dp, 2): uncorrect answer')
         if (allocated(error)) return
 
+        ! Regression: verify median processes all slices when one
+        ! slice contains NaN. Previously, the function used 'return'
+        ! instead of 'cycle' for rank > 1, aborting all subsequent slices.
+        block
+            real(dp) :: xn(3, 3)
+            real(dp) :: rn(3)
+            xn(:, 1) = [1.0_dp, ieee_value(1.0_dp, ieee_quiet_nan), 3.0_dp]
+            xn(:, 2) = [4.0_dp, 5.0_dp, 6.0_dp]
+            xn(:, 3) = [7.0_dp, 8.0_dp, 9.0_dp]
+            rn = median(xn, 1)
+            call check(error, ieee_is_nan(rn(1))&
+                        , 'median: NaN slice should propagate NaN')
+            if (allocated(error)) return
+            call check(error, rn(2), 5.0_dp&
+                        , 'median: slice after NaN should be 5.0'&
+                        , thr = dptol)
+            if (allocated(error)) return
+            call check(error, rn(3), 8.0_dp&
+                        , 'median: slice after NaN should be 8.0'&
+                        , thr = dptol)
+            if (allocated(error)) return
+        end block
     end subroutine
 
     subroutine test_stats_median_odd_dp(error)
