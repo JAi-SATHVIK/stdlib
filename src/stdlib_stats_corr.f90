@@ -575,7 +575,6 @@ contains
       real(sp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(sp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(sp) :: denom
 
       select case(dim)
         case(1)
@@ -589,12 +588,9 @@ contains
                 0._sp,&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), sp)*real(dot_product( centerj_, centerj_), sp)
-              if (denom < epsilon(0._sp)) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centerj_, centeri_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -609,12 +605,9 @@ contains
                 0._sp,&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), sp)*real(dot_product( centerj_, centerj_), sp)
-              if (denom < epsilon(0._sp)) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centeri_, centerj_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -633,7 +626,6 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(dp) :: denom
 
       select case(dim)
         case(1)
@@ -647,12 +639,9 @@ contains
                 0._dp,&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), dp)*real(dot_product( centerj_, centerj_), dp)
-              if (denom < epsilon(0._dp)) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centerj_, centeri_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -667,12 +656,9 @@ contains
                 0._dp,&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), dp)*real(dot_product( centerj_, centerj_), dp)
-              if (denom < epsilon(0._dp)) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centeri_, centerj_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -691,7 +677,6 @@ contains
       complex(sp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       complex(sp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(sp) :: denom
 
       select case(dim)
         case(1)
@@ -705,12 +690,9 @@ contains
                 cmplx(0,0,kind=sp),&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), sp)*real(dot_product( centerj_, centerj_), sp)
-              if (denom < epsilon(0._sp)) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centerj_, centeri_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -725,12 +707,9 @@ contains
                 cmplx(0,0,kind=sp),&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), sp)*real(dot_product( centerj_, centerj_), sp)
-              if (denom < epsilon(0._sp)) then
-                res(j, i) = ieee_value(1._sp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centeri_, centerj_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -749,7 +728,6 @@ contains
       complex(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       complex(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(dp) :: denom
 
       select case(dim)
         case(1)
@@ -763,12 +741,9 @@ contains
                 cmplx(0,0,kind=dp),&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), dp)*real(dot_product( centerj_, centerj_), dp)
-              if (denom < epsilon(0._dp)) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centerj_, centeri_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -783,12 +758,9 @@ contains
                 cmplx(0,0,kind=dp),&
                 mask_)
 
-              denom = real(dot_product( centeri_, centeri_), dp)*real(dot_product( centerj_, centerj_), dp)
-              if (denom < epsilon(0._dp)) then
-                res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-              else
-                res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-              end if
+              res(j, i) = dot_product( centeri_, centerj_)&
+               /sqrt(dot_product( centeri_, centeri_)*&
+                     dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -809,7 +781,6 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(dp) :: denom
 
       select case(dim)
         case(1)
@@ -819,12 +790,9 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centerj_, centeri_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -835,12 +803,9 @@ contains
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centeri_, centerj_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -859,7 +824,6 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(dp) :: denom
 
       select case(dim)
         case(1)
@@ -869,12 +833,9 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centerj_, centeri_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -885,12 +846,9 @@ contains
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centeri_, centerj_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -909,7 +867,6 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(dp) :: denom
 
       select case(dim)
         case(1)
@@ -919,12 +876,9 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centerj_, centeri_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -935,12 +889,9 @@ contains
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centeri_, centerj_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
             end do
           end do
         case default
@@ -959,7 +910,6 @@ contains
       real(dp) :: centeri_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       real(dp) :: centerj_(merge(size(x, 2), size(x, 1), mask = 1<dim))
       logical :: mask_(merge(size(x, 2), size(x, 1), mask = 1<dim))
-      real(dp) :: denom
 
       select case(dim)
         case(1)
@@ -969,12 +919,9 @@ contains
              centeri_ = merge( x(:, i) - mean(x(:, i), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(:, j) - mean(x(:, j), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centerj_, centeri_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centerj_, centeri_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
 
             end do
           end do
@@ -985,12 +932,9 @@ contains
              centeri_ = merge( x(i, :) - mean(x(i, :), mask = mask_),0._dp, mask_)
              centerj_ = merge( x(j, :) - mean(x(j, :), mask = mask_),0._dp, mask_)
 
-             denom = dot_product( centeri_, centeri_)*dot_product( centerj_, centerj_)
-             if (denom < epsilon(0._dp)) then
-               res(j, i) = ieee_value(1._dp, ieee_quiet_nan)
-             else
-               res(j, i) = dot_product( centeri_, centerj_)/sqrt(denom)
-             end if
+             res(j, i) = dot_product( centeri_, centerj_)&
+                 /sqrt(dot_product( centeri_, centeri_)*&
+                       dot_product( centerj_, centerj_))
             end do
           end do
         case default
