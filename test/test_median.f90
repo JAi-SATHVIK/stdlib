@@ -403,12 +403,11 @@ contains
         ! slice has zero valid elements (n==0). Previously, the function
         ! used 'return' instead of 'cycle', aborting all subsequent slices.
         block
-            integer(int8) :: xm(3, 3)
-            logical :: mm(3, 3)
-            real(dp) :: rm(3)
-            xm(:, 1) = [integer(int8) :: 1, 2, 3]
-            xm(:, 2) = [integer(int8) :: 4, 5, 6]
-            xm(:, 3) = [integer(int8) :: 7, 8, 9]
+            integer, parameter :: n = 3
+            integer(int8) :: xm(n, n)
+            logical :: mm(n, n)
+            real(dp) :: rm(n)
+            xm = reshape([integer(int8) :: 1, 2, 3, 4, 5, 6, 7 ,8 ,9], [n, n])
             mm = .true.
             mm(:, 2) = .false.
             rm = median(xm, 1, mm)
@@ -703,12 +702,11 @@ contains
         ! slice has zero valid elements (n==0). Previously, the function
         ! used 'return' instead of 'cycle', aborting all subsequent slices.
         block
-            integer(int16) :: xm(3, 3)
-            logical :: mm(3, 3)
-            real(dp) :: rm(3)
-            xm(:, 1) = [integer(int16) :: 1, 2, 3]
-            xm(:, 2) = [integer(int16) :: 4, 5, 6]
-            xm(:, 3) = [integer(int16) :: 7, 8, 9]
+            integer, parameter :: n = 3
+            integer(int16) :: xm(n, n)
+            logical :: mm(n, n)
+            real(dp) :: rm(n)
+            xm = reshape([integer(int16) :: 1, 2, 3, 4, 5, 6, 7 ,8 ,9], [n, n])
             mm = .true.
             mm(:, 2) = .false.
             rm = median(xm, 1, mm)
@@ -1003,12 +1001,11 @@ contains
         ! slice has zero valid elements (n==0). Previously, the function
         ! used 'return' instead of 'cycle', aborting all subsequent slices.
         block
-            integer(int32) :: xm(3, 3)
-            logical :: mm(3, 3)
-            real(dp) :: rm(3)
-            xm(:, 1) = [integer(int32) :: 1, 2, 3]
-            xm(:, 2) = [integer(int32) :: 4, 5, 6]
-            xm(:, 3) = [integer(int32) :: 7, 8, 9]
+            integer, parameter :: n = 3
+            integer(int32) :: xm(n, n)
+            logical :: mm(n, n)
+            real(dp) :: rm(n)
+            xm = reshape([integer(int32) :: 1, 2, 3, 4, 5, 6, 7 ,8 ,9], [n, n])
             mm = .true.
             mm(:, 2) = .false.
             rm = median(xm, 1, mm)
@@ -1303,12 +1300,11 @@ contains
         ! slice has zero valid elements (n==0). Previously, the function
         ! used 'return' instead of 'cycle', aborting all subsequent slices.
         block
-            integer(int64) :: xm(3, 3)
-            logical :: mm(3, 3)
-            real(dp) :: rm(3)
-            xm(:, 1) = [integer(int64) :: 1, 2, 3]
-            xm(:, 2) = [integer(int64) :: 4, 5, 6]
-            xm(:, 3) = [integer(int64) :: 7, 8, 9]
+            integer, parameter :: n = 3
+            integer(int64) :: xm(n, n)
+            logical :: mm(n, n)
+            real(dp) :: rm(n)
+            xm = reshape([integer(int64) :: 1, 2, 3, 4, 5, 6, 7 ,8 ,9], [n, n])
             mm = .true.
             mm(:, 2) = .false.
             rm = median(xm, 1, mm)
@@ -1463,11 +1459,12 @@ contains
         ! slice contains NaN. Previously, the function used 'return'
         ! instead of 'cycle' for rank > 1, aborting all subsequent slices.
         block
-            real(sp) :: xn(3, 3)
-            real(sp) :: rn(3)
-            xn(:, 1) = [1.0_sp, ieee_value(1.0_sp, ieee_quiet_nan), 3.0_sp]
-            xn(:, 2) = [4.0_sp, 5.0_sp, 6.0_sp]
-            xn(:, 3) = [7.0_sp, 8.0_sp, 9.0_sp]
+            integer, parameter :: n = 3
+            real(sp) :: xn(n, n)
+            real(sp) :: rn(n)
+            xn = reshape([1.0_sp, ieee_value(1.0_sp, ieee_quiet_nan), 3.0_sp, &
+                          4.0_sp, 5.0_sp, 6.0_sp, &
+                          7.0_sp, 8.0_sp, 9.0_sp], [n, n])
             rn = median(xn, 1)
             call check(error, ieee_is_nan(rn(1))&
                         , 'median: NaN slice should propagate NaN')
@@ -1626,6 +1623,30 @@ contains
         call check(error&
                     , any(ieee_is_nan(median(d3_sp, 1, d3_sp > 0)))&
                     , 'median(d3_sp, 1, d3_sp > 0): should contain at least 1 IEEE NaN')
+        if (allocated(error)) return
+
+        ! Regression: verify median_mask processes all slices when one
+        ! slice has zero valid elements (n==0). Previously, the function
+        ! used 'return' instead of 'cycle', aborting all subsequent slices.
+        block
+            integer, parameter :: n = 3
+            real(sp) :: xm(n, n)
+            logical :: mm(n, n)
+            real(sp) :: rm(n)
+            xm = reshape([real(sp) :: 1, 2, 3, 4, 5, 6, 7 ,8 ,9], [n, n])
+            mm = .true.
+            mm(:, 2) = .false.
+            rm = median(xm, 1, mm)
+            call check(error, rm(1), 2.0_sp&
+                        , 'median_mask: first slice should be 2.0', thr=sptol)
+            if (allocated(error)) return
+            call check(error, ieee_is_nan(rm(2))&
+                        , 'median_mask: masked slice should be NaN')
+            if (allocated(error)) return
+            call check(error, rm(3), 8.0_sp&
+                        , 'median_mask: slice after masked should be 8.0', thr=sptol)
+            if (allocated(error)) return
+        end block
 
     end subroutine
 
@@ -1768,11 +1789,12 @@ contains
         ! slice contains NaN. Previously, the function used 'return'
         ! instead of 'cycle' for rank > 1, aborting all subsequent slices.
         block
-            real(dp) :: xn(3, 3)
-            real(dp) :: rn(3)
-            xn(:, 1) = [1.0_dp, ieee_value(1.0_dp, ieee_quiet_nan), 3.0_dp]
-            xn(:, 2) = [4.0_dp, 5.0_dp, 6.0_dp]
-            xn(:, 3) = [7.0_dp, 8.0_dp, 9.0_dp]
+            integer, parameter :: n = 3
+            real(dp) :: xn(n, n)
+            real(dp) :: rn(n)
+            xn = reshape([1.0_dp, ieee_value(1.0_dp, ieee_quiet_nan), 3.0_dp, &
+                          4.0_dp, 5.0_dp, 6.0_dp, &
+                          7.0_dp, 8.0_dp, 9.0_dp], [n, n])
             rn = median(xn, 1)
             call check(error, ieee_is_nan(rn(1))&
                         , 'median: NaN slice should propagate NaN')
@@ -1931,6 +1953,30 @@ contains
         call check(error&
                     , any(ieee_is_nan(median(d3_dp, 1, d3_dp > 0)))&
                     , 'median(d3_dp, 1, d3_dp > 0): should contain at least 1 IEEE NaN')
+        if (allocated(error)) return
+
+        ! Regression: verify median_mask processes all slices when one
+        ! slice has zero valid elements (n==0). Previously, the function
+        ! used 'return' instead of 'cycle', aborting all subsequent slices.
+        block
+            integer, parameter :: n = 3
+            real(dp) :: xm(n, n)
+            logical :: mm(n, n)
+            real(dp) :: rm(n)
+            xm = reshape([real(dp) :: 1, 2, 3, 4, 5, 6, 7 ,8 ,9], [n, n])
+            mm = .true.
+            mm(:, 2) = .false.
+            rm = median(xm, 1, mm)
+            call check(error, rm(1), 2.0_dp&
+                        , 'median_mask: first slice should be 2.0', thr=dptol)
+            if (allocated(error)) return
+            call check(error, ieee_is_nan(rm(2))&
+                        , 'median_mask: masked slice should be NaN')
+            if (allocated(error)) return
+            call check(error, rm(3), 8.0_dp&
+                        , 'median_mask: slice after masked should be 8.0', thr=dptol)
+            if (allocated(error)) return
+        end block
 
     end subroutine
 
