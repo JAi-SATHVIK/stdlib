@@ -88,7 +88,11 @@ contains
         size_work = size_x + size_prepend + size_append
         
         if (size_work <= n_) then
-            allocate(y(0, 0))
+            if (dim_ == 1) then
+                allocate(y(0, size(x, 2)))
+            else
+                allocate(y(size(x, 1), 0))
+            end if
             return
         end if
         
@@ -210,7 +214,11 @@ contains
         size_work = size_x + size_prepend + size_append
         
         if (size_work <= n_) then
-            allocate(y(0, 0))
+            if (dim_ == 1) then
+                allocate(y(0, size(x, 2)))
+            else
+                allocate(y(size(x, 1), 0))
+            end if
             return
         end if
         
@@ -332,7 +340,11 @@ contains
         size_work = size_x + size_prepend + size_append
         
         if (size_work <= n_) then
-            allocate(y(0, 0))
+            if (dim_ == 1) then
+                allocate(y(0, size(x, 2)))
+            else
+                allocate(y(size(x, 1), 0))
+            end if
             return
         end if
         
@@ -454,7 +466,11 @@ contains
         size_work = size_x + size_prepend + size_append
         
         if (size_work <= n_) then
-            allocate(y(0, 0))
+            if (dim_ == 1) then
+                allocate(y(0, size(x, 2)))
+            else
+                allocate(y(size(x, 1), 0))
+            end if
             return
         end if
         
@@ -576,7 +592,11 @@ contains
         size_work = size_x + size_prepend + size_append
         
         if (size_work <= n_) then
-            allocate(y(0, 0))
+            if (dim_ == 1) then
+                allocate(y(0, size(x, 2)))
+            else
+                allocate(y(size(x, 1), 0))
+            end if
             return
         end if
         
@@ -698,7 +718,11 @@ contains
         size_work = size_x + size_prepend + size_append
         
         if (size_work <= n_) then
-            allocate(y(0, 0))
+            if (dim_ == 1) then
+                allocate(y(0, size(x, 2)))
+            else
+                allocate(y(size(x, 1), 0))
+            end if
             return
         end if
         
