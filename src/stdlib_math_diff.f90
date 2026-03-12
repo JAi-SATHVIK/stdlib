@@ -94,7 +94,7 @@ contains
             case (2)
                 allocate(y(size(x, 1), 0))
             case default
-                error stop "diff_2: invalid dimension (dim_ must be 1 or 2)"
+                error stop "diff_2: internal error: invalid dimension (dim_ must be 1 or 2)"
             end select
             return
         end if
@@ -223,7 +223,7 @@ contains
             case (2)
                 allocate(y(size(x, 1), 0))
             case default
-                error stop "diff_2: invalid dimension (dim_ must be 1 or 2)"
+                error stop "diff_2: internal error: invalid dimension (dim_ must be 1 or 2)"
             end select
             return
         end if
@@ -352,7 +352,7 @@ contains
             case (2)
                 allocate(y(size(x, 1), 0))
             case default
-                error stop "diff_2: invalid dimension (dim_ must be 1 or 2)"
+                error stop "diff_2: internal error: invalid dimension (dim_ must be 1 or 2)"
             end select
             return
         end if
@@ -481,7 +481,7 @@ contains
             case (2)
                 allocate(y(size(x, 1), 0))
             case default
-                error stop "diff_2: invalid dimension (dim_ must be 1 or 2)"
+                error stop "diff_2: internal error: invalid dimension (dim_ must be 1 or 2)"
             end select
             return
         end if
@@ -610,7 +610,7 @@ contains
             case (2)
                 allocate(y(size(x, 1), 0))
             case default
-                error stop "diff_2: invalid dimension (dim_ must be 1 or 2)"
+                error stop "diff_2: internal error: invalid dimension (dim_ must be 1 or 2)"
             end select
             return
         end if
@@ -739,7 +739,7 @@ contains
             case (2)
                 allocate(y(size(x, 1), 0))
             case default
-                error stop "diff_2: invalid dimension (dim_ must be 1 or 2)"
+                error stop "diff_2: internal error: invalid dimension (dim_ must be 1 or 2)"
             end select
             return
         end if
