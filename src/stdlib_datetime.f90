@@ -618,28 +618,34 @@ contains
            >= days_from_civil(d2%year, d2%month, d2%day)
     end function date_ge
 
+    pure function time_to_normalized_utc_ms(t) result(res)
+        type(time_type), intent(in) :: t
+        integer(int64) :: res
+        res = modulo(time_to_utc_ms(t), 86400_int64 * 1000_int64)
+    end function time_to_normalized_utc_ms
+
     pure function time_eq(t1, t2) result(res)
         type(time_type), intent(in) :: t1, t2
         logical :: res
-        res = time_to_utc_ms(t1) == time_to_utc_ms(t2)
+        res = time_to_normalized_utc_ms(t1) == time_to_normalized_utc_ms(t2)
     end function time_eq
 
     pure function time_ne(t1, t2) result(res)
         type(time_type), intent(in) :: t1, t2
         logical :: res
-        res = time_to_utc_ms(t1) /= time_to_utc_ms(t2)
+        res = time_to_normalized_utc_ms(t1) /= time_to_normalized_utc_ms(t2)
     end function time_ne
 
     pure function time_lt(t1, t2) result(res)
         type(time_type), intent(in) :: t1, t2
         logical :: res
-        res = time_to_utc_ms(t1) < time_to_utc_ms(t2)
+        res = time_to_normalized_utc_ms(t1) < time_to_normalized_utc_ms(t2)
     end function time_lt
 
     pure function time_le(t1, t2) result(res)
         type(time_type), intent(in) :: t1, t2
         logical :: res
-        res = time_to_utc_ms(t1) <= time_to_utc_ms(t2)
+        res = time_to_normalized_utc_ms(t1) <= time_to_normalized_utc_ms(t2)
     end function time_le
 
     pure function time_gt(t1, t2) result(res)
