@@ -399,13 +399,17 @@ contains
     pure function date_plus_td(d, td) result(res)
         !! version: experimental
         !!
-        !! date + timedelta -> date (adds whole days only).
+        !! date + timedelta -> date.
+        !! The full timedelta (days + seconds + milliseconds) is
+        !! converted to a whole-day count via truncation toward zero;
+        !! sub-day remainder is discarded. E.g. timedelta(hours=36)
+        !! adds 1 whole day, timedelta(hours=-36) subtracts 1 whole day.
         type(date_type), intent(in)      :: d
         type(timedelta_type), intent(in) :: td
         type(date_type) :: res
         integer(int64) :: total_days
         total_days = days_from_civil(d%year, d%month, d%day) &
-                   + int(td%days, int64)
+                   + td_to_ms(td) / MS_PER_DAY
         call civil_from_days(total_days, &
                              res%year, res%month, res%day)
     end function date_plus_td
@@ -419,13 +423,15 @@ contains
     end function td_plus_date
 
     pure function date_minus_td(d, td) result(res)
-        !! date - timedelta -> date
+        !! date - timedelta -> date.
+        !! The full timedelta is converted to a whole-day count via
+        !! truncation toward zero before subtracting.
         type(date_type), intent(in)      :: d
         type(timedelta_type), intent(in) :: td
         type(date_type) :: res
         integer(int64) :: total_days
         total_days = days_from_civil(d%year, d%month, d%day) &
-                   - int(td%days, int64)
+                   - td_to_ms(td) / MS_PER_DAY
         call civil_from_days(total_days, &
                              res%year, res%month, res%day)
     end function date_minus_td
@@ -890,7 +896,9 @@ contains
                 if (present(stat)) stat = 1
                 return
             end if
-            dt%millisecond = nint(ms_frac * 1000.0_dp)
+            ! Clamp to [0, 999]: nint can round up to 1000 for values
+            ! like .9996, keeping millisecond in the documented range.
+            dt%millisecond = min(999, max(0, nint(ms_frac * 1000.0_dp)))
         end if
 
         if (slen <= ms_end) return
@@ -950,7 +958,7 @@ contains
         slen = len_trim(str)
 
         ! Require exactly YYYY-MM-DD (10 characters)
-        if (slen < 10) then
+        if (slen /= 10) then
             if (present(stat)) stat = 1
             return
         end if
@@ -1070,7 +1078,9 @@ contains
                 if (present(stat)) stat = 1
                 return
             end if
-            t%millisecond = nint(ms_frac * 1000.0_dp)
+            ! Clamp to [0, 999]: nint can round up to 1000 for values
+            ! like .9996, keeping millisecond in the documented range.
+            t%millisecond = min(999, max(0, nint(ms_frac * 1000.0_dp)))
         end if
 
         if (slen <= ms_end) return

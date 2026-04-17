@@ -125,8 +125,12 @@ subroutine collect_datetime(testsuite)
                      test_time_comparison), &
         new_unittest("time_comparison_tz", &
                      test_time_comparison_tz), &
+        new_unittest("time_comparison_tz_midnight", &
+                     test_time_comparison_tz_midnight), &
         new_unittest("to_utc_time_test", &
                      test_to_utc_time), &
+        new_unittest("to_utc_time_midnight", &
+                     test_to_utc_time_midnight), &
         new_unittest("format_time_test", &
                      test_format_time), &
         new_unittest("format_time_offset", &
@@ -141,6 +145,10 @@ subroutine collect_datetime(testsuite)
                      test_parse_time_invalid), &
         new_unittest("current_time_valid", &
                      test_current_time_valid), &
+        new_unittest("parse_date_trailing_junk", &
+                     test_parse_date_trailing_junk), &
+        new_unittest("date_td_subday", &
+                     test_date_td_subday), &
         ! --- integration tests ---
         new_unittest("datetime_from_date_time", &
                      test_datetime_from_date_time), &
@@ -1059,6 +1067,36 @@ subroutine test_time_comparison_tz(error)
     if (allocated(error)) return
 end subroutine test_time_comparison_tz
 
+subroutine test_time_comparison_tz_midnight(error)
+    !! Tests timezone comparison that crosses midnight:
+    !! 23:00 UTC-05:00 after modulo-24h normalisation maps to
+    !! 04:00 UTC, which should compare equal to time_type(4,0,0,0,0).
+    type(error_type), allocatable, intent(out) :: error
+    type(time_type) :: t1, t2
+    ! time_eq uses time_to_normalized_utc_ms (modulo 86400000 ms).
+    ! 23:00 UTC-05:00 raw UTC ms = 100800000
+    !   modulo(100800000, 86400000) = 14400000  (04:00 UTC)
+    ! 04:00Z         raw UTC ms = 14400000
+    !   modulo(14400000, 86400000)  = 14400000
+    ! --> they ARE equal after midnight-wrap normalization.
+    t1 = time_type(23, 0, 0, 0, -300)   ! 23:00 UTC-05:00
+    t2 = time_type(4,  0, 0, 0,  0)     ! 04:00 UTC
+    call check(error, t1 == t2, &
+        "23:00-05:00 should equal 04:00Z after midnight-wrap")
+    if (allocated(error)) return
+    ! Verify a genuinely different time is NOT equal
+    t2 = time_type(5, 0, 0, 0, 0)       ! 05:00 UTC
+    call check(error, .not. (t1 == t2), &
+        "23:00-05:00 should NOT equal 05:00Z")
+    if (allocated(error)) return
+    ! Same-day sanity: 06:00-02:00 == 08:00Z
+    t1 = time_type(6, 0, 0, 0, -120)    ! 06:00 UTC-02:00
+    t2 = time_type(8, 0, 0, 0,  0)      ! 08:00 UTC
+    call check(error, t1 == t2, &
+        "06:00-02:00 should equal 08:00Z")
+    if (allocated(error)) return
+end subroutine test_time_comparison_tz_midnight
+
 subroutine test_to_utc_time(error)
     type(error_type), allocatable, intent(out) :: error
     type(time_type) :: t, utc_t
@@ -1074,6 +1112,23 @@ subroutine test_to_utc_time(error)
         "to_utc time offset should be 0")
     if (allocated(error)) return
 end subroutine test_to_utc_time
+
+subroutine test_to_utc_time_midnight(error)
+    !! 23:00 UTC-05:00 -> 04:00 UTC (crosses midnight)
+    type(error_type), allocatable, intent(out) :: error
+    type(time_type) :: t, utc_t
+    t = time_type(23, 0, 0, 0, -300)
+    utc_t = to_utc(t)
+    call check(error, utc_t%hour == 4, &
+        "to_utc 23:00-05:00 should give 04:00 UTC")
+    if (allocated(error)) return
+    call check(error, utc_t%minute == 0, &
+        "to_utc midnight crossing minute should be 0")
+    if (allocated(error)) return
+    call check(error, utc_t%utc_offset_minutes == 0, &
+        "to_utc midnight crossing offset should be 0")
+    if (allocated(error)) return
+end subroutine test_to_utc_time_midnight
 
 subroutine test_format_time(error)
     type(error_type), allocatable, intent(out) :: error
@@ -1289,6 +1344,62 @@ subroutine test_roundtrip_dt_date_time(error)
         "roundtrip offset should be 330")
     if (allocated(error)) return
 end subroutine test_roundtrip_dt_date_time
+
+! ================================================================
+! Additional regression tests for Copilot-flagged issues
+! ================================================================
+
+subroutine test_parse_date_trailing_junk(error)
+    !! parse_date must reject strings longer than 10 chars
+    !! (e.g. '2026-04-10junk') that were previously silently accepted.
+    type(error_type), allocatable, intent(out) :: error
+    type(date_type) :: d
+    integer :: stat
+    d = parse_date('2026-04-10junk', stat)
+    call check(error, stat /= 0, &
+        "parse_date should reject '2026-04-10junk' (trailing chars)")
+    if (allocated(error)) return
+    d = parse_date('2026-04-10 ', stat)
+    call check(error, stat == 0, &
+        "parse_date should accept '2026-04-10 ' (trailing spaces stripped)")
+    if (allocated(error)) return
+end subroutine test_parse_date_trailing_junk
+
+subroutine test_date_td_subday(error)
+    !! date +/- timedelta should account for sub-day components.
+    !! timedelta(hours=36) = 1 whole day + 12 hours;
+    !! date arithmetic uses td_to_ms/MS_PER_DAY truncation.
+    type(error_type), allocatable, intent(out) :: error
+    type(date_type) :: d, res
+    type(timedelta_type) :: td
+    d = date_type(2026, 1, 15)
+    ! 36 hours -> 1 whole day (129600000 ms / 86400000 ms = 1)
+    td = timedelta(hours=36)
+    res = d + td
+    call check(error, res%month == 1, &
+        "Jan 15 + 36h (1 day) month should be Jan")
+    if (allocated(error)) return
+    call check(error, res%day == 16, &
+        "Jan 15 + 36h (1 day) day should be 16")
+    if (allocated(error)) return
+    ! Subtract 36 hours -> subtract 1 whole day
+    res = d - td
+    call check(error, res%month == 1, &
+        "Jan 15 - 36h (1 day) month should be Jan")
+    if (allocated(error)) return
+    call check(error, res%day == 14, &
+        "Jan 15 - 36h (1 day) day should be 14")
+    if (allocated(error)) return
+    ! 23 hours -> 0 whole days (sub-day, truncated)
+    td = timedelta(hours=23)
+    res = d + td
+    call check(error, res%month == 1, &
+        "Jan 15 + 23h (0 days) month should be Jan")
+    if (allocated(error)) return
+    call check(error, res%day == 15, &
+        "Jan 15 + 23h (0 days) day should stay 15")
+    if (allocated(error)) return
+end subroutine test_date_td_subday
 
 end module test_datetime
 
